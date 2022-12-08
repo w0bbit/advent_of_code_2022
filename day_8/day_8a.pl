@@ -1,6 +1,5 @@
 use v5.36;
 use warnings;
-use feature qw(signatures);
 
 my @grid;
 open(my $INPUT, '<', (@ARGV));
@@ -25,44 +24,29 @@ for my $i (0..@grid-1) {
   my $line;
   for my $j (0..@row-1) {
     my %tree = %{$row[$j]};
-    # $line .= $tree{'val'};
     if ($tree{'val'} > $max) {
       $max = $tree{'val'};
-      $tree{'vis'} = 1;
       ${$grid[$i]}[$j]{'vis'} = 1;
-      # $line .= 'V';
       $line .= $tree{'val'};
     } else {
       $line .= $tree{'val'};
     }
   }
-  say $line;
   $max = -1;
-}
 
-say '-----';
-
-for my $i (0..@grid-1) {
-  my @row = reverse @{$grid[$i]};
-  my $line;
+  @row = reverse @{$grid[$i]};
   for my $j (0..@row-1) {
     my %tree = %{$row[$j]};
-    # $line .= $tree{'val'};
     if ($tree{'val'} > $max) {
       $max = $tree{'val'};
-      $tree{'vis'} = 1;
       ${$grid[$i]}[@row-$j-1]{'vis'} = 1;
-      # $line .= 'V';
       $line .= $tree{'val'};
     } else {
       $line .= $tree{'val'};
     }
   }
-  say $line;
   $max = -1;
 }
-
-say '-----';
 
 my @transposed = ();
 for my $i (0 .. $#{$grid[0]}) {
@@ -78,46 +62,30 @@ for my $i (0..@grid-1) {
   my $line;
   for my $j (0..@row-1) {
     my %tree = %{$row[$j]};
-    # $line .= $tree{'val'};
     if ($tree{'val'} > $max) {
       $max = $tree{'val'};
-      $tree{'vis'} = 1;
       ${$grid[$i]}[$j]{'vis'} = 1;
-      # $line .= 'V';
       $line .= $tree{'val'};
     } else {
       $line .= $tree{'val'};
     }
   }
-  say $line;
+
   $max = -1;
-}
 
-
-say '-----';
-
-for my $i (0..@grid-1) {
-  my @row = reverse @{$grid[$i]};
-  my $line;
+  @row = reverse @{$grid[$i]};
   for my $j (0..@row-1) {
     my %tree = %{$row[$j]};
-    # $line .= $tree{'val'};
     if ($tree{'val'} > $max) {
       $max = $tree{'val'};
-      $tree{'vis'} = 1;
       ${$grid[$i]}[@row-$j-1]{'vis'} = 1;
-      # $line .= 'V';
       $line .= $tree{'val'};
     } else {
       $line .= $tree{'val'};
     }
   }
-  say $line;
   $max = -1;
 }
-
-
-say '-----';
 
 for my $row (@grid) {
   my @row = @$row;
