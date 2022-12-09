@@ -28,23 +28,23 @@ for (@directions) {
     my $x_diff = @$H_coord[0] - @$T_coord[0];
     my $y_diff = @$H_coord[1] - @$T_coord[1];
     
-    if (abs($x_diff) != 0 && abs($y_diff) != 0) {
-      # fix this
-      @$T_coord[0] = @$H_coord[0];
-    } else {
-      if (abs($x_diff) > 1) {
-        if ($x_diff > 0) {
-          @$T_coord[0]++;
-        } else {
-          @$T_coord[0]--;
-        }
-      } elsif (abs($y_diff) > 1) {
-        if ($y_diff > 0) {
-          @$T_coord[1]++;
-        } else {
-          @$T_coord[1]--;
-        }
+    if (abs($x_diff) > 1) {
+      if ($x_diff > 0) {
+        @$T_coord[0]++;
+      } else {
+        @$T_coord[0]--;
       }
+    } elsif (abs($y_diff) > 1) {
+      if ($y_diff > 0) {
+        @$T_coord[1]++;
+      } else {
+        @$T_coord[1]--;
+      }
+    }
+    
+    # match head's previous location when tail must move diagonally
+    if (abs($x_diff) + abs($y_diff) > 2) {
+      @$T_coord = split ', ' ,$H_visited_coords[-1];
     }
 
     $move++;
@@ -53,9 +53,7 @@ for (@directions) {
     push @H_visited_coords, "@$H_coord[0], @$H_coord[1]";
     push @T_visited_coords, "@$T_coord[0], @$T_coord[1]";
   }
-
 }
-
 
 my %H_set = map {$_ => 1} @H_visited_coords;
 my $H_locations = scalar keys %H_set;
@@ -72,4 +70,4 @@ for (keys %T_set) {
 say '-----';
 say scalar keys %T_set, ' places';
 
-# should be 6271
+# 6271
